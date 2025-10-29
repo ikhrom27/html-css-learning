@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hero Two Columns</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7f8fa; --text:#1f2937; --muted:#6b7280; --brand:#2563eb; --brand-d:#1d4ed8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:'Outfit',sans-serif; color:var(--text); background:var(--bg);
+    }
+    .container{
+      max-width:1120px; margin:0 auto; padding:24px 20px 0;
+    }
+    /* Navbar (simple, opsional) */
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; padding:8px 0 24px;
+    }
+    .nav .logo{font-weight:700; letter-spacing:.3px}
+    .nav ul{display:flex; gap:20px; list-style:none; padding:0; margin:0; color:var(--muted)}
+    .nav a{text-decoration:none; color:inherit}
+    .nav .cta{
+      background:var(--brand); color:#fff; border:0; padding:10px 16px; border-radius:10px; cursor:pointer;
+    }
+
+    /* HERO */
+    .hero{
+      display:flex; align-items:center; gap:56px; min-height:78vh;
+    }
+    .hero-text{flex:1; max-width:560px}
+    .hero h1{
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      line-height:1.1; margin:0 0 14px; letter-spacing:.2px;
+    }
+    .hero p{
+      color:var(--muted); font-size: clamp(1rem, 1.4vw, 1.125rem);
+      line-height:1.7; margin:0 0 24px;
+    }
+    .hero .actions{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .btn{
+      background:var(--brand); color:#fff; border:0; padding:14px 22px; border-radius:12px;
+      cursor:pointer; font-weight:600; transition:background .2s;
+    }
+    .btn:hover{background:var(--brand-d)}
+    .btn-ghost{
+      background:#fff; color:var(--text); border:1px solid #e5e7eb; padding:14px 18px; border-radius:12px;
+    }
+
+    .hero-visual{flex:1; display:flex; justify-content:center}
+    .card{
+      background:#fff; border-radius:18px; padding:14px; width:min(520px,100%);
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    .card img{
+      width:100%; height:auto; display:block; border-radius:14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{flex-direction:column; text-align:center; gap:28px; padding:10px 0 48px}
+      .hero-text{max-width:680px; margin:0 auto}
+      .hero .actions{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="nav">
+      <div class="logo">TeamFlow</div>
+      <ul>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Docs</a></li>
+      </ul>
+      <button class="cta">Sign In</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Ship work faster with an intuitive workflow</h1>
+        <p>Plan sprints, track progress, and collaborate seamlessly—everything your team needs in one place.</p>
+        <div class="actions">
+          <button class="btn">Get Started</button>
+          <button class="btn-ghost">View Demo</button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="card">
+          <!-- Pakai placeholder apa saja -->
+          <img src="https://picsum.photos/960/600?random=3" alt="Product preview">
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
