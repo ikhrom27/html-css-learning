@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GridLanding — Belajar CSS Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --muted: #8aa0b5;
+      --text: #e6eef7;
+      --brand: #5b8cff;
+      --brand-2: #7ef0ff;
+      --ring: 0 0 0 6px rgba(91, 140, 255, .15);
+      --radius: 16px;
+      --maxw: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(126, 240, 255, .15), transparent 50%),
+                  radial-gradient(1000px 600px at 10% -20%, rgba(91, 140, 255, .18), transparent 60%),
+                  var(--bg);
+    }
+
+    /* Page frame */
+    .wrapper {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .container { width: 100%; max-width: var(--maxw); padding: 0 20px; margin: 0 auto; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; backdrop-filter: saturate(1.2) blur(8px);
+      background: linear-gradient(180deg, rgba(11,18,32,.7), rgba(11,18,32,0));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      z-index: 10;
+    }
+    .nav { display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; }
+    .logo {
+      display: grid; grid-auto-flow: column; align-items: center; gap: 10px; font-weight: 700;
+    }
+    .logo-badge { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); }
+    .nav ul { list-style: none; padding: 0; margin: 0; display: grid; grid-auto-flow: column; gap: 20px; justify-content: start; }
+    .nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .nav a:hover { color: var(--text); }
+    .actions { display: grid; grid-auto-flow: column; gap: 10px; }
+    .btn { appearance: none; border: 0; padding: 10px 14px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+    .btn.ghost { background: transparent; color: var(--text); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #001026; }
+    .btn.primary:hover { filter: brightness(1.05); }
+    .btn:focus-visible { outline: none; box-shadow: var(--ring); }
+
+    /* Hero */
+    .hero { padding: 64px 0 24px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+    .hero-copy { grid-column: 1 / -1; }
+    .hero-media { grid-column: 1 / -1; }
+
+    .eyebrow { color: var(--brand-2); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+    h1 { margin: 10px 0 12px; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; }
+    .lead { color: var(--muted); font-size: clamp(15px, 2.2vw, 18px); max-width: 60ch; }
+
+    .hero-cta { margin-top: 20px; display: grid; grid-auto-flow: column; gap: 12px; width: max-content; }
+
+    .showcase {
+      width: 100%; aspect-ratio: 16/9; border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)), var(--card);
+      border: 1px solid rgba(255,255,255,.08); position: relative; overflow: hidden;
+      display: grid; place-items: center;
+    }
+    .grid-demo {
+      --cells: 12;
+      display: grid; gap: 8px; width: 92%; height: 78%;
+      grid-template-columns: repeat(var(--cells), 1fr);
+      grid-auto-rows: 1fr;
+    }
+    .grid-demo div { background: rgba(126, 240, 255, .08); border: 1px dashed rgba(126,240,255,.25); border-radius: 10px; }
+    .grid-demo .a { grid-column: 1 / span 7; }
+    .grid-demo .b { grid-column: 8 / -1; }
+    .grid-demo .c { grid-column: 1 / span 4; }
+    .grid-demo .d { grid-column: 5 / span 4; }
+    .grid-demo .e { grid-column: 9 / -1; }
+
+    /* Logos */
+    .logos { padding: 24px 0 56px; opacity: .9; }
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 18px; align-items: center;
+    }
+    .logo-card { height: 56px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; display: grid; place-items: center; color: var(--muted); font-weight: 700; }
+
+    /* Features */
+    section { padding: 64px 0; }
+    .section-head { display: grid; gap: 8px; margin-bottom: 24px; }
+    .muted { color: var(--muted); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .feature-card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 18px; display: grid; gap: 10px; }
+    .badge { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); }
+
+    /* Stats (explicit grid areas) */
+    .stats {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .stats .card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 18px; }
+    .s1 { grid-column: 1 / span 4; }
+    .s2 { grid-column: 5 / span 4; }
+    .s3 { grid-column: 9 / span 4; }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid; gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .pricing-card { background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 22px; display: grid; gap: 14px; }
+    .price { font-size: 32px; font-weight: 700; }
+    .pricing-card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+
+    /* CTA */
+    .cta { background: linear-gradient(135deg, rgba(91,140,255,.16), rgba(126,240,255,.12)); border: 1px solid rgba(255,255,255,.14); border-radius: calc(var(--radius) + 8px); padding: 28px; display: grid; gap: 12px; align-items: center; }
+    .cta-grid { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+
+    /* Footer */
+    footer { border-top: 1px solid rgba(255,255,255,.08); }
+    .foot {
+      display: grid; gap: 16px; padding: 24px 0; align-items: start;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .foot small { color: var(--muted); }
+
+    /* Responsive tweaks */
+    @media (min-width: 900px) {
+      .hero-copy { grid-column: 1 / span 6; }
+      .hero-media { grid-column: 7 / -1; }
+    }
+
+    @media (max-width: 599px) {
+      .nav { grid-template-columns: 1fr auto; }
+      .nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="container nav">
+        <div class="logo"><span class="logo-badge"></span> GridLanding</div>
+        <ul>
+          <li><a href="#fitur">Fitur</a></li>
+          <li><a href="#harga">Harga</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <div class="actions">
+          <button class="btn ghost">Masuk</button>
+          <button class="btn primary">Daftar</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Belajar CSS Grid</div>
+            <h1>Bangun landing page modern dengan <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Grid</span>.</h1>
+            <p class="lead">Contoh ini menampilkan berbagai pola Grid: <b>repeat()</b>, <b>auto-fit</b>, <b>minmax()</b>, dan <b>grid-template-areas/columns</b>. Desain responsif tanpa framework.</p>
+            <div class="hero-cta">
+              <button class="btn primary">Mulai Sekarang</button>
+              <button class="btn ghost">Lihat Demo</button>
+            </div>
+          </div>
+          <div class="hero-media">
+            <div class="showcase" aria-label="Demo grid">
+              <div class="grid-demo" role="img" aria-label="Susunan grid 12 kolom">
+                <div class="a"></div>
+                <div class="b"></div>
+                <div class="c"></div>
+                <div class="d"></div>
+                <div class="e"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOGOS -->
+      <section class="logos">
+        <div class="container logo-grid">
+          <div class="logo-card">Alpha</div>
+          <div class="logo-card">Beta</div>
+          <div class="logo-card">Gamma</div>
+          <div class="logo-card">Delta</div>
+          <div class="logo-card">Epsilon</div>
+          <div class="logo-card">Zeta</div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="fitur">
+        <div class="container">
+          <div class="section-head">
+            <h2>Kenapa pakai Grid?</h2>
+            <p class="muted">Kontrol layout dua dimensi, alignment yang kuat, dan utilitas responsif yang elegan.</p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card">
+              <span class="badge" aria-hidden="true"></span>
+              <h3>Auto-fit + minmax()</h3>
+              <p class="muted">Gunakan <code>grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))</code> agar kartu otomatis wrap dan seragam.</p>
+            </article>
+            <article class="feature-card">
+              <span class="badge" aria-hidden="true"></span>
+              <h3>12 Kolom Fleksibel</h3>
+              <p class="muted">Bangun hero dengan 12 kolom (<code>repeat(12, 1fr)</code>) untuk kontrol proporsi yang presisi.</p>
+            </article>
+            <article class="feature-card">
+              <span class="badge" aria-hidden="true"></span>
+              <h3>Grid + Card</h3>
+              <p class="muted">Campurkan Grid untuk tata letak dan komponen kartu untuk konten, menjaga konsistensi spacing.</p>
+            </article>
+            <article class="feature-card">
+              <span class="badge" aria-hidden="true"></span>
+              <h3>Responsif Tanpa Media Query</h3>
+              <p class="muted">Banyak bagian sudah responsif hanya dengan <code>auto-fit</code> / <code>minmax()</code>—lebih sedikit breakpoint.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATS (explicit columns) -->
+      <section>
+        <div class="container stats">
+          <div class="card s1">
+            <h3>10x Lebih Cepat</h3>
+            <p class="muted">Prototipe layout dalam hitungan menit dengan Grid modern.</p>
+          </div>
+          <div class="card s2">
+            <h3>100% Responsif</h3>
+            <p class="muted">Skalakan dari mobile ke desktop tanpa pusing.</p>
+          </div>
+          <div class="card s3">
+            <h3>Aksesibilitas</h3>
+            <p class="muted">Gunakan tag semantik, kontras baik, dan fokus yang jelas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section id="harga">
+        <div class="container">
+          <div class="section-head">
+            <h2>Harga yang simpel</h2>
+            <p class="muted">Mulai belajar tanpa hambatan. Upgrade kapan pun.</p>
+          </div>
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <h3>Gratis</h3>
+              <div class="price">Rp0</div>
+              <ul>
+                <li>Contoh lengkap</li>
+                <li>Dokumentasi dasar</li>
+                <li>Tanpa batas waktu</li>
+              </ul>
+              <button class="btn primary">Pilih Paket</button>
+            </div>
+            <div class="pricing-card" style="border-color: rgba(126,240,255,.5)">
+              <h3>Pro</h3>
+              <div class="price">Rp99k</div>
+              <ul>
+                <li>Komponen tambahan</li>
+                <li>Snippet responsif</li>
+                <li>Akses update</li>
+              </ul>
+              <button class="btn primary">Pilih Paket</button>
+            </div>
+            <div class="pricing-card">
+              <h3>Tim</h3>
+              <div class="price">Rp299k</div>
+              <ul>
+                <li>Lisensi tim</li>
+                <li>Template proyek</li>
+                <li>Dukungan prioritas</li>
+              </ul>
+              <button class="btn primary">Pilih Paket</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section>
+        <div class="container cta">
+          <div class="cta-grid">
+            <div>
+              <h3>Siap membangun layout rapi?</h3>
+              <p class="muted">Fork file ini dan jadikan fondasi project-mu berikutnya.</p>
+            </div>
+            <div>
+              <button class="btn primary">Mulai Gratis</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container foot">
+        <div>
+          <div class="logo" style="margin-bottom:6px"><span class="logo-badge"></span> GridLanding</div>
+          <small>© 2025 GridLanding. Semua hak cipta.</small>
+        </div>
+        <div>
+          <strong>Produk</strong>
+          <ul style="margin:8px 0 0; padding-left: 18px; color: var(--muted)">
+            <li>Komponen</li>
+            <li>Template</li>
+            <li>Integrasi</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Perusahaan</strong>
+          <ul style="margin:8px 0 0; padding-left: 18px; color: var(--muted)">
+            <li>Tentang</li>
+            <li>Karier</li>
+            <li>Kontak</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Bantuan</strong>
+          <ul style="margin:8px 0 0; padding-left: 18px; color: var(--muted)">
+            <li>Pusat Bantuan</li>
+            <li>Privasi</li>
+            <li>Syarat</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
